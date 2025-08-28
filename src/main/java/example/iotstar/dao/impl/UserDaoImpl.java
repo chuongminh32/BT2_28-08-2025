@@ -18,7 +18,7 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 
 	@Override
 	public UserModel checkLogin(String username, String password) {
-		String sql = "SELECT * FROM user WHERE username=? AND password=?";
+		String sql = "SELECT * FROM users WHERE username=? AND password=?";
 		try (Connection conn = super.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
 			ps.setString(1, username);
@@ -40,7 +40,7 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 
 	@Override
 	public List<UserModel> findAll() {
-		String query = "SELECT * FROM user";
+		String query = "SELECT * FROM users";
 		List<UserModel> list = new ArrayList<>();
 		try {
 			conn = super.getConnection();
@@ -50,22 +50,21 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 			while (rs.next()) {
 				UserModel newUser = new UserModel(rs.getInt("id"), rs.getString("username"), rs.getString("email"),
 						rs.getString("password"), rs.getString("fullname"), rs.getString("images"),
-						rs.getString("phone"), rs.getInt("roleid"), rs.getDate("createDate"));
+						rs.getString("phone"), rs.getInt("roleid"), rs.getDate("createDate") // giữ nguyên thời gian
+				);
 				list.add(newUser);
 			}
-			return list;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeAll();
 		}
-		return null;
+		return list; // luôn return list, không null
 	}
 
 	@Override
 	public UserModel findById(int id) {
-		String query = "SELECT * FROM user WHERE id = ?";
+		String query = "SELECT * FROM users WHERE id = ?";
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(query);
@@ -87,8 +86,8 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 
 	@Override
 	public void Insert(UserModel user) {
-		String queryCheck = "SELECT * FROM user WHERE username = ? OR email = ?";
-		String insertQuery = "INSERT INTO users(id, username, email, password, fullname, images) VALUES(?, ?, ?, ?, ?, ?)";
+		String queryCheck = "SELECT * FROM users WHERE username = ? OR email = ?";
+		String insertQuery = "INSERT INTO users(id, username, email, password, fullname, images, phone, roleid, createDate) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			conn = super.getConnection();
@@ -114,6 +113,9 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 			ps.setString(4, user.getPassword());
 			ps.setString(5, user.getFullname());
 			ps.setString(6, user.getImages());
+			ps.setString(7, user.getPhone());
+			ps.setInt(8, user.getRoleid());
+			ps.setDate(9, user.getCreateDate());
 
 			ps.executeUpdate();
 			System.out.println("Thêm user thành công!");
@@ -127,7 +129,7 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 
 	@Override
 	public void Update(UserModel user) {
-		String query = "UPDATE user SET username=?, email=?, password=?, fullname=?, images=? WHERE id=?";
+		String query = "UPDATE users SET username=?, email=?, password=?, fullname=?, images=?, phone=?, roleid=?, createDate=? WHERE id=?";
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(query);
@@ -138,6 +140,9 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 			ps.setString(4, user.getFullname());
 			ps.setString(5, user.getImages());
 			ps.setInt(6, user.getId());
+			ps.setString(7, user.getPhone());
+			ps.setInt(8, user.getRoleid());
+			ps.setDate(9, user.getCreateDate());
 
 			int rows = ps.executeUpdate();
 			if (rows > 0) {
@@ -154,7 +159,7 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 
 	@Override
 	public void Delete(int id) {
-		String query = "DELETE FROM user WHERE id = ?";
+		String query = "DELETE FROM users WHERE id = ?";
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(query);
@@ -177,7 +182,7 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 	@Override
 	public UserModel findByUsername(String username) {
 		// TODO Auto-generated method stub
-		String sql = "SELECT * FROM user WHERE username = ? ";
+		String sql = "SELECT * FROM users WHERE username = ? ";
 		try {
 			conn = super.getConnection();
 			ps = conn.prepareStatement(sql);
@@ -190,9 +195,9 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 				user.setUsername(rs.getString("username"));
 				user.setFullname(rs.getString("fullname"));
 				user.setPassword(rs.getString("password"));
-				user.setRoleid(Integer.parseInt(rs.getString("roleid")));
+				user.setRoleid(rs.getInt("roleid"));
 				user.setPhone(rs.getString("phone"));
-				user.setCreateDate(rs.getDate("createdDate"));
+				user.setCreateDate(rs.getDate("createDate"));
 				return user;
 			}
 		} catch (Exception e) {
@@ -235,9 +240,9 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 //			);
 
 		// Thử xóa user id=3
-		dm.Delete(3);
-		UserModel u = dm.findById(2);
-		System.out.println("Find user id=2: " + u);
+//		dm.Delete(3);
+//		UserModel u = dm.findById(2);
+//		System.out.println("Find user id=2: " + u);
 
 		List<UserModel> listUserModel = dm.findAll();
 		for (UserModel user : listUserModel) {

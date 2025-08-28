@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-Đăng nhập thành công 
+Trang chu manager
 </body>
 </html>
