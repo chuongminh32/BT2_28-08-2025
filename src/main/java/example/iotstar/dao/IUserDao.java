@@ -8,6 +8,8 @@ public interface IUserDao {
 	
 	UserModel findById(int id);
 	
+	UserModel findByUsername(String username);
+	
 	void Insert(UserModel user); 
 	
 	void Update(UserModel user);

@@ -1,6 +1,7 @@
 package example.iotstar.models;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 public class UserModel implements Serializable {
 
@@ -14,12 +15,23 @@ public class UserModel implements Serializable {
 	private String password;
 	private String fullname;
 	private String images;
+	private String phone;
+	private int roleid;
+	private Date createDate;
+
+	public UserModel(String phone, int roleid, Date createDate) {
+		super();
+		this.phone = phone;
+		this.roleid = roleid;
+		this.createDate = createDate;
+	}
 
 	public UserModel() {
 		super();
 	}
 
-	public UserModel(int id, String username, String email, String password, String fullname, String images) {
+	public UserModel(int id, String username, String email, String password, String fullname, String images,
+			String phone, int roleid, Date createDate) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -27,10 +39,37 @@ public class UserModel implements Serializable {
 		this.password = password;
 		this.fullname = fullname;
 		this.images = images;
+		this.phone = phone;
+		this.roleid = roleid;
+		this.createDate = createDate;
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public int getRoleid() {
+		return roleid;
+	}
+
+	public void setRoleid(int roleid) {
+		this.roleid = roleid;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	public void setId(int id) {
@@ -80,9 +119,8 @@ public class UserModel implements Serializable {
 	@Override
 	public String toString() {
 		return "UserModel [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password
-				+ ", fullname=" + fullname + ", images=" + images + "]";
+				+ ", fullname=" + fullname + ", images=" + images + ", phone=" + phone + ", roleid=" + roleid
+				+ ", createDate=" + createDate + "]";
 	}
-	
-	
 
 }
