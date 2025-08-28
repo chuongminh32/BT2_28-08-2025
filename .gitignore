@@ -1,0 +1,29 @@
+# Ignore build directories
+/target/
+/bin/
+/out/
+
+# Ignore IDE settings
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+*.classpath
+*.project
+*.settings/
+
+# Ignore config folder
+/config/
+/resources/config/
+/src/main/resources/config/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore logs
+*.log
+
+# Ignore compiled files
+*.class
