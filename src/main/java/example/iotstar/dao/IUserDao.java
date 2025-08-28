@@ -17,4 +17,8 @@ public interface IUserDao {
 	void Delete(int id);
 	
 	UserModel checkLogin(String username, String password);
+
+	UserModel findByEmail(String email);
+
+	UserModel findByPhone(String phone);
 }

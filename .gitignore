@@ -18,6 +18,9 @@
 /resources/config/
 /src/main/resources/config/
 
+# Ignore properties files
+*.properties
+
 # Ignore OS files
 .DS_Store
 Thumbs.db

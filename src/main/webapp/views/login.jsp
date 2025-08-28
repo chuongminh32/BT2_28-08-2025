@@ -104,21 +104,23 @@
 			<h3 class="alert alertdanger">${alert}</h3>
 		</c:if>
 		<div class="container">
-			<label for="uname"><b>Username</b></label>
+			<h2>Đăng nhập</h2>
+			<label for="uname"><b>Tên đăng nhập</b></label>
 			<input type="text" placeholder="Enter Username" name="username" required>
 
-			<label for="psw"><b>Password</b></label>
+			<label for="psw"><b>Mật khẩu</b></label>
 			<input type="password" placeholder="Enter Password" name="password" required>
 
-			<button type="submit">Login</button>
+			<button type="submit">Đăng nhập</button>
 			<label>
 				<input type="checkbox" checked="checked" name="remember"> Remember me
 			</label>
 		</div>
 
 		<div class="container" style="background-color: #f1f1f1; border-radius: 8px; padding: 10px;">
-			<button type="button" class="cancelbtn">Cancel</button>
-			<span class="psw">Forgot <a href="#">password?</a></span>
+			<p class="text-center mt-3 text-small">
+				Chưa có tài khoản ? <a href="${pageContext.request.contextPath}/register">Đăng kí</a>
+			</p>
 		</div>
 	</form>
 </body>

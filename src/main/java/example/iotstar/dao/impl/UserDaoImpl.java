@@ -220,6 +220,67 @@ public class UserDaoImpl extends DBConnectSQLServer implements IUserDao {
 		}
 	}
 
+	@Override
+	public UserModel findByEmail(String email) {
+		// TODO Auto-generated method stub
+		String sql = "SELECT * FROM users WHERE email = ?";
+
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				UserModel user = new UserModel();
+				user.setId(rs.getInt("id"));
+				user.setEmail(rs.getString("email"));
+				user.setUsername(rs.getString("username"));
+				user.setFullname(rs.getString("fullname"));
+				user.setPassword(rs.getString("password"));
+				user.setRoleid(rs.getInt("roleid"));
+				user.setPhone(rs.getString("phone"));
+				user.setCreateDate(rs.getDate("createDate"));
+				return user;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public UserModel findByPhone(String phone) {
+		// TODO Auto-generated method stub
+
+		String sql = "SELECT * FROM users WHERE phone = ?";
+
+		try {
+			conn = super.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, phone);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				UserModel user = new UserModel();
+				user.setId(rs.getInt("id"));
+				user.setEmail(rs.getString("email"));
+				user.setUsername(rs.getString("username"));
+				user.setFullname(rs.getString("fullname"));
+				user.setPassword(rs.getString("password"));
+				user.setRoleid(rs.getInt("roleid"));
+				user.setPhone(rs.getString("phone"));
+				user.setCreateDate(rs.getDate("createDate"));
+				return user;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	
+	
+
 	public static void main(String[] args) {
 		UserDaoImpl dm = new UserDaoImpl();
 
